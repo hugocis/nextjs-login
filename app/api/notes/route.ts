@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from '@/app/lib/prisma'
+import { prisma } from '@/app/lib/prisma';
 import { error } from "console";
-import { ErrorMessage} from "@/app/lib/service"
+import { ErrorMessage} from "@/app/lib/service";
 
 export async function GET() {
     

@@ -50,5 +50,32 @@ export async function DELETE(request: Request, { params }: Params) {
 }
 
 export async function PUT(request: Request, { params }: Params) {
+
+    try 
+    {
+        const { title, content } = await request.json()
+
+        const updatedNote = await prisma.note.update({
+            where: {
+                id: Number(params.id)
+            },
+            data:{
+                title:title,
+                content:content
+            }
+        })
+
+        if (!updatedNote) {
+            return NextResponse.json(NotFoundMessage)
+        }
+
+        return NextResponse.json({ message: "Updating procces of note with id " + params.id + " was successful. The note was: \n" + updatedNote })
+    } 
+    catch (error) {
+        ErrorMessage(error, "Error fetching note wiht id " + params.id)  
+    }
+    
+
+
     return NextResponse.json({ message: "Updating single note..." })
 }
