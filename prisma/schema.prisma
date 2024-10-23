@@ -21,3 +21,13 @@ model Note{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model user{ 
+  id Int @id @default(autoincrement())
+  Nombre String
+  Apellido1 String
+  Apellido2 String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
