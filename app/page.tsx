@@ -1,17 +1,25 @@
 import { LoadNotes } from "@/app/lib/service"
-import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
-async function HomePage(){
+import { NoteForm } from "@/app/components/NoteForm"
+import { Note } from "@prisma/client";
 
+async function HomePage() {
   const data = await LoadNotes();
+
   return(
-    <div>{
-      data.map( (note: { id: Key | null | undefined; title: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) =>{
-        <div key ={note.id}>
-        <h1>{note.title} </h1>
-        <p>{note.content}</p>
-        </div>
-      })
-    }</div>
+  <div className="flex items-center justify-center h-screen">
+    <div>
+      <NoteForm />
+       
+      <div>{
+        data.map((note : Note) => {
+          <div key={note.id} className="bg-slate-400 p-4 my-2">
+            <h1>{note.title} </h1>
+            <p>{note.content}</p>
+          </div>
+        })
+      }</div>
+    </div>
+  </div>
   )
 }
 

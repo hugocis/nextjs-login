@@ -1,3 +1,4 @@
+"use client";
 import { NextResponse } from "next/server";
 
 export function ErrorMessage (error: any, message: String)
@@ -22,7 +23,7 @@ export function NotFoundMessage ()
 }
 
 export async function LoadNotes(){
-    const res = await fetch("https://nextjs-login-nyk6ahno4-hugocis-projects.vercel.app/api/notes")
+    const res = await fetch("/api/notes")
     const data = await res.json() 
     return data
 }
