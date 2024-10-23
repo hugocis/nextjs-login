@@ -1,6 +1,13 @@
-import { LoadNotes } from "@/app/lib/service"
+// import { LoadNotes }   from "@/app/lib/service"
+"use client"
 import { NoteForm } from "@/app/components/NoteForm"
 import { Note } from "@prisma/client";
+
+async function LoadNotes(){
+  const res = await fetch("/api/notes");
+  const data = await res.json();
+  return data;
+}
 
 async function HomePage() {
   const data = await LoadNotes();
