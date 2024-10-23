@@ -15,7 +15,7 @@ export async function GET(request: Request, { params }: Params) {
             })
 
         if (!note) {
-            return NotFoundMessage
+            return NextResponse.json(NotFoundMessage)
         }
 
         return NextResponse.json({ message: "Getting process of note with id " + params.id + " was succesful. The note is:\n" + note })
@@ -38,7 +38,7 @@ export async function DELETE(request: Request, { params }: Params) {
             })
 
         if (!deletedNote) {
-            return NotFoundMessage
+            return NextResponse.json(NotFoundMessage)
         }
 
         return NextResponse.json({ message: "Deleting procces of note with id " + params.id + " was successful. The note was: \n" + deletedNote })
