@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function ErrorMessage (error: any, message: String)
+export function ErrorMessage (error: unknown, message: string)
 {
     if (error instanceof Error) 
     {

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const notes = await prisma.note.findMany();
     return NextResponse.json(notes);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error fetching notes' },
       { status: 500 }
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(newNote);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Error posting note' },
       { status: 500 }
