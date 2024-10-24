@@ -1,11 +1,19 @@
+// app/components/NoteForm.tsx
 "use client";
 
 import { useEffect, useState } from 'react';
 
+interface Note {
+    id: string;
+    title: string;
+    content: string;
+}
+// app/components/NoteForm.tsx
+
 interface NoteFormProps {
-    initialData?: { title: string; content: string; id: string };
-    onNoteCreated?: (note: { title: string; content: string; id: string }) => void;
-    onNoteUpdated?: (note: { title: string; content: string; id: string }) => void;
+    initialData?: Note | null; // Permitir null además de undefined
+    onNoteCreated?: (note: Note) => void;
+    onNoteUpdated?: (note: Note) => void;
 }
 
 export function NoteForm({ initialData, onNoteCreated, onNoteUpdated }: NoteFormProps) {
@@ -16,6 +24,9 @@ export function NoteForm({ initialData, onNoteCreated, onNoteUpdated }: NoteForm
         if (initialData) {
             setTitle(initialData.title);
             setContent(initialData.content);
+        } else {
+            setTitle('');
+            setContent('');
         }
     }, [initialData]);
 
@@ -23,7 +34,7 @@ export function NoteForm({ initialData, onNoteCreated, onNoteUpdated }: NoteForm
         e.preventDefault();
 
         if (initialData) {
-            // Update existing note
+            // Actualizar nota existente
             const res = await fetch(`/api/notes/${initialData.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ title, content }),
@@ -31,10 +42,10 @@ export function NoteForm({ initialData, onNoteCreated, onNoteUpdated }: NoteForm
                     'Content-Type': 'application/json',
                 },
             });
-            const data = await res.json();
-            if (onNoteUpdated) onNoteUpdated(data);
+            const updatedNote = await res.json();
+            if (onNoteUpdated) onNoteUpdated(updatedNote);
         } else {
-            // Create new note
+            // Crear nueva nota
             const res = await fetch("/api/notes", {
                 method: 'POST',
                 body: JSON.stringify({ title, content }),
@@ -42,10 +53,11 @@ export function NoteForm({ initialData, onNoteCreated, onNoteUpdated }: NoteForm
                     'Content-Type': 'application/json',
                 },
             });
-            const data = await res.json();
-            if (onNoteCreated) onNoteCreated(data);
+            const newNote = await res.json();
+            if (onNoteCreated) onNoteCreated(newNote);
         }
 
+        // Reiniciar campos del formulario
         setTitle('');
         setContent('');
     };
