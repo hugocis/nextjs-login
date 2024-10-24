@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from '@/app/lib/prisma';
 import { error } from "console";
-import { ErrorMessage} from "@/app/lib/service";
+//import { ErrorMessage} from "@/app/lib/service";
 
 export async function GET() {
     
@@ -12,7 +12,19 @@ export async function GET() {
     } 
     catch (error) 
     {
-        ErrorMessage(error, "Error fetching notes")
+        //return NextResponse.json(ErrorMessage(error, "Error fetching notes"));
+        if (error instanceof Error) 
+            {
+                return NextResponse.json
+                (
+                    {
+                        message: "Error fetching notes",
+                    },
+                    {
+                        status: 500,
+                    }
+                )
+            }
     }
 }
 
@@ -20,7 +32,7 @@ export async function POST(request: Request) {
 
     try 
     { 
-        const { title, content } = await request.json()
+        const { title, content } = await request.json();
         const newNote = await prisma.note.create
         ({
             data: 
@@ -35,6 +47,18 @@ export async function POST(request: Request) {
     } 
     catch (error) 
     {
-        ErrorMessage(error, "Error posting note with structure: \n" + request.json())
+        //return NextResponse.json(ErrorMessage(error, "Error posting note with structure: \n" + request.json()));
+        if (error instanceof Error) 
+            {
+                return NextResponse.json
+                (
+                    {
+                        message: "Error fetching notes",
+                    },
+                    {
+                        status: 500,
+                    }
+                )
+            }
     }
 }
