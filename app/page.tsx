@@ -1,9 +1,11 @@
 // app/page.tsx
+"use client"; // Indica que este archivo es un Componente de Cliente
+
 import { useEffect, useState } from 'react';
 import { NoteForm } from '@/app/components/NoteForm';
 
 interface Note {
-  id: string; // or number depending on your schema
+  id: string; // o número dependiendo de tu esquema
   title: string;
   content: string;
 }
@@ -21,7 +23,7 @@ async function loadNotes(): Promise<Note[]> {
 }
 
 function HomePage() {
-  const [notes, setNotes] = useState<Note[]>([]); // Specify Note type
+  const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,8 +33,8 @@ function HomePage() {
         const data = await loadNotes();
         setNotes(data);
       } catch (err) {
-        if(err instanceof Error)
-        setError(err.message);
+        if (err instanceof Error)
+          setError(err.message);
       } finally {
         setLoading(false);
       }
